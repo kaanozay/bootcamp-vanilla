@@ -1,9 +1,12 @@
+import TableComponent from "./components/TableComponent";
+
 const App = () => {
   return (
     <div className="App">
-      App
+      <TableComponent/>
     </div>
   );
 }
+
 
 export default App;
