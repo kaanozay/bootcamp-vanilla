@@ -1,47 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Link,
   useParams,
 } from "react-router-dom";
+import NoteContext from '../context/NoteContext';
 
-export default function MainPage({notes, setNotes}) { 
+export default function MainPage() { 
 
-    const [note, setNote] =useState("");
-
-    const [counter, setCounter] = useState(Date.now);
-
-
-  const adding = () => {
-    setCounter(counter+1);
-    setNotes([...notes, {text:note, id:counter, path:"/notes/"+counter}]);  
-    
-
-  }
-
-  const deleting = (id) => {
-
-   setNotes(notes.filter((item) => item.id !== id));
-    
-  }
-
-  const handleChange = (e) => {setNote(e.target.value)}
-
+  const data = useContext(NoteContext);
 
     return (
         <div className="App">
           
           <textarea
             name="note"
-            onChange={handleChange}
-            value={note}
+            onChange={data.handleChange}
+            value={data.note}
           />
           <div>
-            <button onClick={() => adding()}>Create</button>
+            <button onClick={() => data.adding()}>Create</button>
           </div>
           
          
          <div>
-         {notes.map((item) => {
+         {data.notes.map((item) => {
                     return (
                         <>
                         <div>
@@ -49,7 +31,7 @@ export default function MainPage({notes, setNotes}) {
                               <li>
                                 <Link to={item.path} >Nota git</Link>
                               </li>
-                            <button onClick={() => deleting(item.id)}>Delete</button>
+                            <button onClick={() => data.deleting(item.id)}>Delete</button>
                         </div>
                             
                         </>
