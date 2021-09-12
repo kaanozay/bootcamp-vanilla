@@ -1,59 +1,29 @@
-//import TableComponent from "./components/TableComponent";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import MainPage from './pages/MainPage.js';
+import Notes from './pages/Notes.js';
+import React, { useState } from 'react';
 
-import React, { useState } from 'react'
 
 const App = () => {
 
-
-  const [note, setNote] =useState("");
-
   const [notes, setNotes] = useState([]);
-
-  const adding = () => {
-
-    setNotes([...notes, note]);  
-
-  }
-
-  const deleting = (id) => {
-
-   setNotes(notes.filter((item) => item.id !== id));
-    
-  }
-
-  const handleChange = (e) => {setNote(e.target.value)}
 
   return (
     <div className="App">
-      
-      <textarea
-        name="note"
-        onChange={handleChange}
-        value={note}
-      />
-      <div>
-        <button onClick={() => adding()}>Create</button>
-      </div>
-      
-     
-     <div>
-     {notes.map((item) => {
-                return (
-                    <>
-                    <div>
-                        <h2>{item}</h2>
-                        <button onClick={() => deleting(item.id)}>Delete</button>
-                    </div>
-                        
-                    </>
-                );
-            })}
-     </div>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <MainPage notes={notes} setNotes={setNotes}/>
+          </Route>
+          <Route path='/notes/:id'> 
+            <Notes noteText={notes}/>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
-
-
 }
+
 
 
 export default App;
